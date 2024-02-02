@@ -4,9 +4,11 @@ import { API_GET } from '../../api';
 import { Card, Row, Col, Button, Form, FormGroup } from 'react-bootstrap';
 import { CctvProvider } from '../../Provider/CctvProvider';
 import { ConfirmModal } from '../Modal';
+import { useNavigate } from 'react-router-dom';
 
 export default function CctvDetail() {
     let params = useParams();
+    const navigate = useNavigate();
 
     const [ipcId, setIpcId] = useState(0);
     const [ipAddress, setIpAddress] = useState("");
@@ -74,14 +76,17 @@ export default function CctvDetail() {
         console.log(ipAddress, cctvName, ipcStatus);
         let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus);
         if (json.result){
-            window.location = "/cctv/all";
+            // window.location = "/cctv/all";
+            navigate("/cctv/all");
         }
     }
 
     const doUpdateCctv = async () => {
         let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus);
         if (json.result){
-            window.location = "/cctv/all";
+            // window.location = "/cctv/all";
+            navigate("/cctv/all");
+
         }
     }
 

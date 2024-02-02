@@ -4,9 +4,11 @@ import { API_GET } from '../../api';
 import { Card, Row, Col, Button, Form, FormGroup } from 'react-bootstrap';
 import { ConfirmModal } from '../Modal';
 import { AccessProvider } from '../../Provider/AccessProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccessDetail() {
     let params = useParams();
+    const navigate = useNavigate();
 
     const [acId, setAcId] = useState(0);
     const [acIp, setAcIp] = useState("");
@@ -75,14 +77,17 @@ export default function AccessDetail() {
         console.log(acIp, acName, acPlaceId);
         let json = await AccessProvider.createAccess(acIp, acName, acPlaceId);
         if (json.result){
-            window.location = "/AccessControl/all";
+            // window.location = "/AccessControl/all";
+            navigate("/AccessControl/all");
         }
     }
 
     const doUpdateAccess = async () => {
         let json = await AccessProvider.updateAccess(acId, acIp, acName, acPlaceId);
         if (json.result){
-            window.location = "/AccessControl/all";
+            // window.location = "/AccessControl/all";
+            navigate("/AccessControl/all");
+
         }
     }
 
