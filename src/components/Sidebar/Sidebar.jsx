@@ -30,6 +30,7 @@ import { IoMenu } from 'react-icons/io5';
 import { LuScanFace } from "react-icons/lu";
 import { FaRoadBarrier } from "react-icons/fa6";
 import { ConfirmModal } from '../Modal';
+import { NavLink } from 'react-router-dom';
 
 export default function Sidebar() {
     const [sidebarExpanded, setSidebarExpanded] = useState(true);
@@ -97,10 +98,12 @@ export default function Sidebar() {
                 <hr />
                 <ul className="nav nav-pills flex-column mb-auto fs-5">
                     <li className="nav-item ">
-                        <Link to="/admin" className="nav-link text-white" aria-current="page" style={{ display: 'flex', alignItems: 'center' }}>
+                        <NavLink to="/admin" className="nav-link text-white" aria-current="page"
+                                 activeClassName="active" 
+                                 style={{ display: 'flex', alignItems: 'center' }}>
                             <BiSolidDashboard style={{ width: '20px' }} />
                             <span style={{ marginLeft: '15px' }}>แดชบอร์ด</span>
-                        </Link>
+                        </NavLink>
                     </li>
                     <button
                             style={{ display: 'flex', alignItems: 'center' }}
@@ -115,16 +118,20 @@ export default function Sidebar() {
                         <div className="collapse" id="cctv-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <Link to="/cctv/all" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
+                                    <NavLink to="/cctv/all" className="nav-link text-white" 
+                                              activeClassName="active"
+                                              aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <RiFileList2Line style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>รายการทั้งหมด</span>
-                                    </Link>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
+                                    <NavLink to="/dev" className="nav-link" 
+                                            activeClassName="active"
+                                            aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
                                         <PiPlugsConnected style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Online</span>
-                                    </Link>
+                                    </NavLink>
                                 </li>
                                 <li>
                                     <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
@@ -155,10 +162,12 @@ export default function Sidebar() {
                         <div className="collapse" id="control-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <Link to="/AccessControl/all" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
+                                    <NavLink to="/AccessControl/all" className="nav-link" 
+                                             activeClassName="active"
+                                             aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <LuScanFace style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Face Scan</span>
-                                    </Link>
+                                    </NavLink>
                                 </li>
                                 <li>
                                     <Link to="/dev" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
@@ -173,10 +182,12 @@ export default function Sidebar() {
 
                     <hr />
                     <li className="nav-item ">
-                        <Link to="/customer" className="nav-link text-white" aria-current="page" style={{ display: 'flex', alignItems: 'center' }}>
+                        <NavLink to="/customer" className="nav-link text-white" 
+                                activeClassName="active"
+                                 aria-current="page" style={{ display: 'flex', alignItems: 'center' }}>
                             <BiSolidUserDetail style={{ width: '20px' }} />
                             <span style={{ marginLeft: '15px' }}>ข้อมูลผู้ใช้</span>
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
                 <hr />

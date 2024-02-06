@@ -21,5 +21,10 @@ li a:hover {
   overflow: hidden; /* Hide the content when collapsed */
 }
 
+.active {
+  background-color: #007bff; /* Highlight color */
+  color: white; /* Text color */
+}
+
   
 
