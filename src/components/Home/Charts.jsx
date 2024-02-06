@@ -11,6 +11,8 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
+import { SERVER_URL } from '../../app.config';
+import Spinner from 'react-bootstrap/Spinner';
 
 ChartJS.register(
     CategoryScale,
@@ -38,10 +40,14 @@ export default function Charts() {
     const [isLoading , setIsLoading] = useState(false);
     const [chartData, setChartData] = useState({});
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
+            try{
             const response = await fetch(
-                "http://localhost:4080/api/report_count",
+                SERVER_URL + "report_count",
                 {
                     method: "GET",
                     headers: {
@@ -78,6 +84,11 @@ export default function Charts() {
 
             setChartData(dataset);
             setIsLoading(true);
+        } catch (error) {
+            console.error('Fetch data error: ', error);
+        } finally {
+            setLoading(false);
+        }
         }
         fetchData();
     }, []);
@@ -90,6 +101,13 @@ export default function Charts() {
 
     return(
         <>
+            {loading ? ( // Conditionally render Bootstrap spinner
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
+                ) : (
             <Container className="my-3 mb-4">
            <Card style={{ width: '88%' , height: '60%' , marginLeft: '5rem'}}>
                 <Card.Body style={{ width: '88%' , height: '60%' , marginLeft: '5rem'}}>
@@ -99,6 +117,7 @@ export default function Charts() {
                 </Card.Body>
             </Card>
             </Container>
+            )}
         </>
     );
 }
