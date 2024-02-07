@@ -103,7 +103,6 @@ export default function Login() {
         );
     
         const data = await response.json();
-        // console.log(data);
         return data;
     
       };
@@ -123,6 +122,14 @@ export default function Login() {
 
     //* นำข้อมูลจาก user ไปยังหน้า Home
     const doLogin = async () => {
+        const loading = Swal.fire({
+            title: 'กำลังเข้าสู่ระบบ',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading(); // Show loading animation
+            }
+        });
         const data_1 = await getAuthenToken(); //* รอการทำงานของ function ก่อนจะทำคำสั่งต่อไป
 
         if (data_1.result) {
@@ -144,6 +151,7 @@ export default function Login() {
                 const u_role = localStorage.getItem("u_role");
 
                 if (u_role === '1') {
+                    loading.close();
                     Swal.fire({
                         title: 'ยินดีต้อนรับ ' + u_name + " " + u_lastname,
                         text: 'กำลังเข้าสู่ระบบ กรุณารอสักครู่',
@@ -157,6 +165,7 @@ export default function Login() {
                 }
     
             } else {
+                loading.close();
                 Swal.fire({
                     title: 'เกิดข้อผิดพลาด',
                     text: 'Username หรือ Password ไม่ถูกต้อง',
@@ -166,6 +175,7 @@ export default function Login() {
                 });
             }
         } else {
+            loading.close();
             Swal.fire({
                 title: 'เกิดข้อผิดพลาด',
                 text: 'Username หรือ Password ของคุณไม่มีในระบบ',
