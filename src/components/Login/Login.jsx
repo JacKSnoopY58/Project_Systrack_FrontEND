@@ -123,7 +123,7 @@ export default function Login() {
     //* นำข้อมูลจาก user ไปยังหน้า Home
     const doLogin = async () => {
         const loading = Swal.fire({
-            title: 'กำลังเข้าสู่ระบบ',
+            title: 'กำลังเข้าสู่ระบบ...',
             allowOutsideClick: false,
             showConfirmButton: false,
             didOpen: () => {
