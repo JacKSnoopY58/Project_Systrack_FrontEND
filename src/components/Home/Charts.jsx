@@ -37,7 +37,7 @@ export const options = {
 }
 
 export default function Charts() {
-    const [isLoading , setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [chartData, setChartData] = useState({});
 
     const [loading, setLoading] = useState(false);
@@ -45,50 +45,50 @@ export default function Charts() {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            try{
-            const response = await fetch(
-                SERVER_URL + "report_count",
-                {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                        'Content-Type': 'application/json',
-                        Authorization: "Bearer " + localStorage.getItem("access_token")
-                    }
-                }
-            )            
-
-            let json = await response.json();
-
-            console.log(json);
-            
-            var labels = [];
-            var data = [];
-
-            for(var i = 0; i < json.data.length; i++) {
-                var item = json.data[i];
-                labels.push(item.device_type_name);
-                data.push(item.Total);
-            }
-
-            var dataset = {
-                labels: labels,
-                datasets: [
+            try {
+                const response = await fetch(
+                    SERVER_URL + "report_count",
                     {
-                        label: "จำนวนอุปกรณ์",
-                        data: data,
-                        backgroundColor: "rgba(255, 99, 132, 0.2)" 
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                            'Content-Type': 'application/json',
+                            Authorization: "Bearer " + localStorage.getItem("access_token")
+                        }
                     }
-                ] 
-            }
+                )
 
-            setChartData(dataset);
-            setIsLoading(true);
-        } catch (error) {
-            console.error('Fetch data error: ', error);
-        } finally {
-            setLoading(false);
-        }
+                let json = await response.json();
+
+                console.log(json);
+
+                var labels = [];
+                var data = [];
+
+                for (var i = 0; i < json.data.length; i++) {
+                    var item = json.data[i];
+                    labels.push(item.device_type_name);
+                    data.push(item.Total);
+                }
+
+                var dataset = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "จำนวนอุปกรณ์",
+                            data: data,
+                            backgroundColor: "rgba(255, 99, 132, 0.2)"
+                        }
+                    ]
+                }
+
+                setChartData(dataset);
+                setIsLoading(true);
+            } catch (error) {
+                console.error('Fetch data error: ', error);
+            } finally {
+                setLoading(false);
+            }
         }
         fetchData();
     }, []);
@@ -99,24 +99,27 @@ export default function Charts() {
         }
     }
 
-    return(
+    return (
         <>
             {loading ? ( // Conditionally render Bootstrap spinner
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-                        <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                    </div>
-                ) : (
-            <Container className="my-3 mb-4">
-           <Card style={{ width: '88%' , height: '60%' , marginLeft: '5rem'}}>
-                <Card.Body style={{ width: '88%' , height: '60%' , marginLeft: '5rem'}}>
-                    {
-                        getChart()
-                    }
-                </Card.Body>
-            </Card>
-            </Container>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            ) : (
+                <Container className="my-3 mb-4">
+                    <Row>
+                        <Col xs={12} sm={12} md={12} xl={12} >
+                        <Card >
+                            <Card.Body style={{ width: '88%', height: '10%', marginLeft: '5rem' }}>
+                                
+                                {getChart()}
+                            </Card.Body>
+                        </Card>
+                        </Col>
+                    </Row>
+                </Container>
             )}
         </>
     );

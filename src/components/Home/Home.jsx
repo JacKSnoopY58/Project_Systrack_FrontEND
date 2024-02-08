@@ -6,7 +6,7 @@ export default function Home() {
     if (localStorage.getItem("access_token")) {
         console.log(localStorage.getItem("access_token"));
         return (
-            <div style={{background:'#eaeaea', width: '100%' , height: '100vh'}}>
+            <div style={{background:'#eaeaea', width: '100%' , minHeight: '100vh'}}>
                 <Cards/>
                 <Charts/>
             </div>
