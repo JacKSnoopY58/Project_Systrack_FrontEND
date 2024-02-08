@@ -134,16 +134,20 @@ export default function Sidebar() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/cctv_read/progress" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
+                                    <NavLink to="/cctv_read/progress" className="nav-link" 
+                                            activeClassName="active"
+                                            aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
                                         <BiSolidHourglassTop style={{ width: '20px', marginLeft: '10px'}} />
                                         <span style={{ marginLeft: '15px' }}>In progress</span>
-                                    </Link>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/cctv_read/offline" className="nav-link" aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#f54040' }}>
+                                    <NavLink to="/cctv_read/offline" className="nav-link" 
+                                            activeClassName="active"
+                                            aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#f54040' }}>
                                         <TbPlugConnectedX style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Offine</span>
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             </ul>
 
