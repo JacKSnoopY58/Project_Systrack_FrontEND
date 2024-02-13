@@ -169,7 +169,11 @@ export default function AccessDetail() {
                                     </Form.Control.Feedback>
                                 </FormGroup>
                                 <hr />
-                                <Button type="submit" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} />
+                                <div className="d-flex justify-content-end">
+                                    <button class="btn btn-success" type="submit" style={{ marginRight: '10px' }}>SAVE</button>
+                                    <Button onClick={() => navigate("/AccessControl/all")} variant="secondary">Back</Button>
+                                </div>
+                                {/* <Button type="submit" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} /> */}
                             </Form>
                         </Card.Body>
                     </Card>
