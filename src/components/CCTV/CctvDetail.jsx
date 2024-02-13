@@ -25,15 +25,15 @@ export default function CctvDetail() {
         async function fetchData() {
             const response = await API_GET("ipc_status_name");
             // let json = await response.json();
-            setIpcStatusName(response.data);        
+            setIpcStatusName(response.data);
         }
         fetchData();
-        
+
     }, []);
 
     useEffect(() => {
-        async function fetchData(ipcId){
-            
+        async function fetchData(ipcId) {
+
             let json = await API_GET("cctv/" + ipcId);
 
             var data = json.data[0];
@@ -45,37 +45,37 @@ export default function CctvDetail() {
 
         }
 
-        if (params.ipcId !== "create"){
+        if (params.ipcId !== "create") {
             fetchData([params.ipcId]);
         }
 
     }, [params.ipcId]);
- 
+
 
     const handleSubmit = (event) => {
         console.log("handleSubmit");
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             console.log("false");
-          event.preventDefault();
-          event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
         } else {
-          event.preventDefault(); // Prevent the default form submission
-           if (params.ipcId === "create"){
+            event.preventDefault(); // Prevent the default form submission
+            if (params.ipcId === "create") {
                 setShowConfirmModal(true);
-              } else {
+            } else {
                 setShowConfirmModal(true);
-              }
+            }
         }
-    
+
         setValidated(true);
-      };
+    };
 
     const doCreateCctv = async () => {
 
         console.log(ipAddress, cctvName, ipcStatus);
         let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus);
-        if (json.result){
+        if (json.result) {
             // window.location = "/cctv/all";
             navigate("/cctv/all");
         }
@@ -83,7 +83,7 @@ export default function CctvDetail() {
 
     const doUpdateCctv = async () => {
         let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus);
-        if (json.result){
+        if (json.result) {
             // window.location = "/cctv/all";
             navigate("/cctv/all");
 
@@ -98,10 +98,10 @@ export default function CctvDetail() {
 
         const modalTitle = params.ipcId === "create" ? "เพิ่มข้อมูล CCTV" : "อัปเดตข้อมูล CCTV";
         const modalMessage =
-        params.ipcId === "create"
-            ? "คุณต้องการเพิ่มข้อมูล CCTV ใช่หรือไม่?"
-            : "คุณต้องการอัปเดตข้อมูล CCTV ใช่หรือไม่?";
-        
+            params.ipcId === "create"
+                ? "คุณต้องการเพิ่มข้อมูล CCTV ใช่หรือไม่?"
+                : "คุณต้องการอัปเดตข้อมูล CCTV ใช่หรือไม่?";
+
         return (
             <ConfirmModal
                 show={showConfirmModal}
@@ -123,25 +123,25 @@ export default function CctvDetail() {
                         <Card.Body>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <h5>Please Enter CCTV information</h5>
-                                <hr/>
+                                <hr />
                                 <FormGroup as={Row} className="mb-3" controlId="formPlaintextPassword">
                                     <Form.Label column sm="2"> IP Address <span className="text-danger"> * </span> : </Form.Label>
-                                    <Col sm="5"> 
-                                    <Form.Control type="text" 
-                                        value={ipAddress} 
-                                        placeholder="Enter IP Address" 
-                                        onChange={(e) => setIpAddress(e.target.value)} required/>
-                                    <Form.Control.Feedback type="invalid"> Please Enter IP Address</Form.Control.Feedback>
+                                    <Col sm="5">
+                                        <Form.Control type="text"
+                                            value={ipAddress}
+                                            placeholder="Enter IP Address"
+                                            onChange={(e) => setIpAddress(e.target.value)} required />
+                                        <Form.Control.Feedback type="invalid"> Please Enter IP Address</Form.Control.Feedback>
                                     </Col>
                                 </FormGroup>
                                 {/*CCTV Name */}
                                 <FormGroup as={Row} className="mb-3" controlId="formPlaintextPassword">
                                     <Form.Label column sm="2"> CCTV Name  <span className="text-danger"> * </span> :</Form.Label>
                                     <Col sm="5">
-                                        <Form.Control type="text" 
+                                        <Form.Control type="text"
                                             value={cctvName}
                                             placeholder="Enter CCTV Name"
-                                            onChange={(e) => setCctvName(e.target.value)} required/>
+                                            onChange={(e) => setCctvName(e.target.value)} required />
                                         <Form.Control.Feedback type="invalid"> Please Enter CCTV Name</Form.Control.Feedback>
                                     </Col>
                                 </FormGroup>
@@ -149,15 +149,15 @@ export default function CctvDetail() {
                                 <FormGroup as={Row} className="mb-3" controlId="validateIpcStatus">
                                     <Form.Label column sm="2"> IPC Status <span className="text-danger"> * </span> : </Form.Label>
                                     <Col sm="5">
-                                        <Form.Select 
-                                        value={ipcStatus} 
-                                        onChange={(e) => setIpcStatus(e.target.value)} 
-                                        required>
+                                        <Form.Select
+                                            value={ipcStatus}
+                                            onChange={(e) => setIpcStatus(e.target.value)}
+                                            required>
                                             <option label="Select CCTV Status"></option>
                                             {ipcStatusName.map((item, index) => (
-                                                <option key={index} 
-                                                        value={item.ipc_status}>
-                                                {item.ipc_status_name}
+                                                <option key={index}
+                                                    value={item.ipc_status}>
+                                                    {item.ipc_status_name}
                                                 </option>
                                             ))
                                             }
@@ -168,7 +168,10 @@ export default function CctvDetail() {
                                     </Form.Control.Feedback>
                                 </FormGroup>
                                 <hr />
-                                <Button type="submit" as="input"  className="sign-btn" value="SAVE" style={{background: 'green' , border: '0'}} />
+                                <div className="d-flex justify-content-end">
+                                    <button class="btn btn-success" type="submit" style={{ marginRight: '10px' }}>SAVE</button>
+                                    <Button onClick={() => navigate("/cctv/all")} variant="secondary">Back</Button>
+                                </div>
                             </Form>
                         </Card.Body>
                     </Card>
