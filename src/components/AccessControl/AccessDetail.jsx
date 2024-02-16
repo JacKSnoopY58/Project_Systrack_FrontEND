@@ -25,7 +25,6 @@ export default function AccessDetail() {
         async function fetchData() {
             //This end point from server
             const response = await API_GET("ac_place_name");
-            // let json = await response.json();
             setAcPlaceName(response.data);        
         }
         fetchData();

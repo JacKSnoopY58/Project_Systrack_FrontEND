@@ -13,13 +13,27 @@ export default function CctvDetail() {
     const [ipcId, setIpcId] = useState(0);
     const [ipAddress, setIpAddress] = useState("");
     const [cctvName, setCctvName] = useState("");
+    const [cctvPlaceId, setCctvPlaceId] = useState(0);
+    const [cctvPlaceName, setCctvPlaceName] = useState([]);
     const [ipcStatus, setIpcStatus] = useState(0);
     const [ipcStatusName, setIpcStatusName] = useState([]);
+
 
     const [validated, setValidated] = useState(false);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+
+    useEffect(() => {
+        async function fetchData() {
+            //This end point from server
+            const response = await API_GET("ac_place_name");
+            setCctvPlaceName(response.data);      
+        }
+        fetchData();
+
+        
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -42,6 +56,7 @@ export default function CctvDetail() {
             setIpAddress(data.ipc_address);
             setCctvName(data.ipc_name);
             setIpcStatus(data.ipc_status);
+            setCctvPlaceId(data.place_id);
 
         }
 
@@ -73,8 +88,10 @@ export default function CctvDetail() {
 
     const doCreateCctv = async () => {
 
-        console.log(ipAddress, cctvName, ipcStatus);
-        let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus);
+        console.log(ipAddress, cctvName, ipcStatus, cctvPlaceId);
+
+        let json = await CctvProvider.createCctv(ipAddress, cctvName, ipcStatus, cctvPlaceId);
+        console.log(json);
         if (json.result) {
             // window.location = "/cctv/all";
             navigate("/cctv/all");
@@ -82,7 +99,7 @@ export default function CctvDetail() {
     }
 
     const doUpdateCctv = async () => {
-        let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus);
+        let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus, cctvPlaceId);
         if (json.result) {
             // window.location = "/cctv/all";
             navigate("/cctv/all");
@@ -165,6 +182,28 @@ export default function CctvDetail() {
                                     </Col>
                                     <Form.Control.Feedback type="invalid">
                                         Please select IPC Status.
+                                    </Form.Control.Feedback>
+                                </FormGroup>
+                                {/*CCTV Place */}
+                                <FormGroup as={Row} className="mb-3" controlId="validateIpcStatus">
+                                    <Form.Label column sm="2"> อาคาร <span className="text-danger"> * </span> : </Form.Label>
+                                    <Col sm="5">
+                                        <Form.Select 
+                                        value={cctvPlaceId} 
+                                        onChange={(e) => setCctvPlaceId(e.target.value)} 
+                                        required>
+                                            <option label="กรุณาเลือกอาคาร"></option>
+                                            {cctvPlaceName.map((item, index) => (
+                                                <option key={index} 
+                                                        value={item.place_id}>
+                                                {item.place_name}
+                                                </option>
+                                            ))
+                                            }
+                                        </Form.Select>
+                                    </Col>
+                                    <Form.Control.Feedback type="invalid">
+                                        กรุณาเลือกอาคาร
                                     </Form.Control.Feedback>
                                 </FormGroup>
                                 <hr />
