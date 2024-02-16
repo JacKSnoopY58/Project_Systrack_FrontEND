@@ -182,10 +182,11 @@ export default function Customer() {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr role="row" className="bg-secondary text-white">
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>IP Address</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '2%', textAlign: 'center' }}>IP Address</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>CCTV Name</th>
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Status</th>
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '2%', textAlign: 'center' }}>Status</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '3%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>

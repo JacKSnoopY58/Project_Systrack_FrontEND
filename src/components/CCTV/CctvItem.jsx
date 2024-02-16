@@ -47,6 +47,7 @@ export default function CctvItem(props) {
             <tr style={{ textAlign: 'center' }}>
                 <td>{props.data.ipc_address}</td>
                 <td style={{ textAlign: 'left'}} >{props.data.ipc_name}</td>
+                <td>{props.data.place_name}</td>
                 <td>
                     <span style={statusStyle}>{props.data.ipc_status_name}</span>
                 </td>
