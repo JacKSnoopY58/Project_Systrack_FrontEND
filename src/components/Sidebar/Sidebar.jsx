@@ -99,7 +99,6 @@ export default function Sidebar() {
                 <ul className="nav nav-pills flex-column mb-auto fs-5">
                     <li className="nav-item ">
                         <NavLink to="/admin" className="nav-link text-white" aria-current="page"
-                                 activeClassName="active" 
                                  style={{ display: 'flex', alignItems: 'center' }}>
                             <BiSolidDashboard style={{ width: '20px' }} />
                             <span style={{ marginLeft: '15px' }}>แดชบอร์ด</span>
@@ -118,32 +117,28 @@ export default function Sidebar() {
                         <div className="collapse" id="cctv-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <NavLink to="/cctv/all" className="nav-link text-white" 
-                                              activeClassName="active"
+                                    <NavLink to="/cctv/all" className="nav-link text-white"
                                               aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <RiFileList2Line style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>รายการทั้งหมด</span>
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/cctv_read/online" className="nav-link" 
-                                            activeClassName="active"
+                                    <NavLink to="/cctv_read/online" className="nav-link"
                                             aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#b1f558' }}>
                                         <PiPlugsConnected style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Online</span>
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/cctv_read/progress" className="nav-link" 
-                                            activeClassName="active"
+                                    <NavLink to="/cctv_read/progress" className="nav-link"
                                             aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fadf11' }}>
                                         <BiSolidHourglassTop style={{ width: '20px', marginLeft: '10px'}} />
                                         <span style={{ marginLeft: '15px' }}>In progress</span>
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/cctv_read/offline" className="nav-link" 
-                                            activeClassName="active"
+                                    <NavLink to="/cctv_read/offline" className="nav-link"
                                             aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#f54040' }}>
                                         <TbPlugConnectedX style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Offine</span>
@@ -166,16 +161,14 @@ export default function Sidebar() {
                         <div className="collapse" id="control-collapse">
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
-                                    <NavLink to="/AccessControl/all" className="nav-link" 
-                                             activeClassName="active"
+                                    <NavLink to="/AccessControl/all" className="nav-link"
                                              aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <LuScanFace style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>Face Scan</span>
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/AccessControl/Barriers" className="nav-link" 
-                                             activeClassName="active"
+                                    <NavLink to="/AccessControl/Barriers" className="nav-link"
                                              aria-current="page" style={{ display: 'flex', alignItems: 'center', color: '#fffafa' }}>
                                         <FaRoadBarrier style={{ width: '20px', marginLeft: '10px' }} />
                                         <span style={{ marginLeft: '15px' }}>ไม้กั้น</span>
@@ -188,8 +181,7 @@ export default function Sidebar() {
 
                     <hr />
                     <li className="nav-item ">
-                        <NavLink to="/customer" className="nav-link text-white" 
-                                activeClassName="active"
+                        <NavLink to="/customer" className="nav-link text-white"
                                  aria-current="page" style={{ display: 'flex', alignItems: 'center' }}>
                             <BiSolidUserDetail style={{ width: '20px' }} />
                             <span style={{ marginLeft: '15px' }}>ข้อมูลผู้ใช้</span>

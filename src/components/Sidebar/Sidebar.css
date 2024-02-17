@@ -26,5 +26,9 @@ li a:hover {
   color: white; /* Text color */
 }
 
-  
+
+.nav-link:hover {
+  background-color: #3c393b;
+  color: #fff; /* Change text color to white when hovered */
+}
 
