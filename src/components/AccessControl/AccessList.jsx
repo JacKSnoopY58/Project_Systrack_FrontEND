@@ -223,13 +223,13 @@ export default function AccessControl() {
                 ) : (
                     <div>
                         <div style={{ margin: '3rem', marginTop: '1rem' }}>
-                            <Table striped bordered hover>
+                            <Table responsive striped bordered hover>
                                 <thead>
                                     <tr role="row" className="bg-secondary text-white">
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>IP Address</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Device Name</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="2" style={{ width: '1%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
