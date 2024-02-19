@@ -1,56 +1,34 @@
 import { Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Badge from 'react-bootstrap/Badge';
 
 export default function CctvItem(props) {
     const onDelete = async () =>{
         props.onDelete(props.data);
     }
 
-    const { ipc_id, ipc_address, ipc_name, ipc_status_name, index } = props;
-    // Define styles based on status
-    let statusStyle;
+    let statusBadge;
     switch (props.data.ipc_status_name) {
         case "Online":
-            statusStyle = {
-                backgroundColor: "green",
-                borderRadius: "5px",
-                color: "white",
-                padding: "5px", // Adjust the padding as needed
-            };
+            statusBadge = <Badge pill bg="success">Online</Badge>;
             break;
         case "Offline":
-            statusStyle = {
-                backgroundColor: "red",
-                borderRadius: "5px",
-                color: "white",
-                padding: "5px", // Adjust the padding as needed
-            };
+            statusBadge = <Badge pill bg="danger">Offline</Badge>;
             break;
         case "In Progress":
-            statusStyle = {
-                backgroundColor: "yellow",
-                borderRadius: "5px",
-                color: "black",
-                padding: "2px", // Adjust the padding as needed
-            };
+            statusBadge = <Badge pill bg="warning text-dark">In Progress</Badge>;
             break;
         default:
-            statusStyle = {
-                backgroundColor: "gray",
-                borderRadius: "5px",
-                color: "white",
-                padding: "5px", // Adjust the padding as needed
-            };
+            statusBadge = <Badge pill bg="secondary">Unknown</Badge>;
     }
+
     return (
         <>
             <tr style={{ textAlign: 'center' }}>
                 <td>{props.data.ipc_address}</td>
                 <td style={{ textAlign: 'left'}} >{props.data.ipc_name}</td>
                 <td>{props.data.place_name}</td>
-                <td>
-                    <span style={statusStyle}>{props.data.ipc_status_name}</span>
-                </td>
+                <td>{statusBadge}</td>
                 <td>
                     <Link to ={`/cctv/${props.data.ipc_id}`} className="btn btn-primary btn-sm">Edit</Link>
                 </td>
