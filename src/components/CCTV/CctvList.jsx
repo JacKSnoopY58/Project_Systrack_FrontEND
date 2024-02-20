@@ -11,6 +11,9 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Spinner from 'react-bootstrap/Spinner';
 import { SERVER_URL } from '../../app.config';
+import { Container, Row, Col } from 'react-bootstrap';
+import { PiSortAscendingBold, PiSortDescendingBold } from "react-icons/pi";
+import { FaSort } from "react-icons/fa";
 
 export default function Customer() {
     const MySwal = withReactContent(Swal);
@@ -22,6 +25,9 @@ export default function Customer() {
     const [selectedBuilding, setSelectedBuilding] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState(null);
 
     // useEffect(() => {
     //     async function fetchData() {
@@ -172,40 +178,72 @@ export default function Customer() {
         setSelectedBuilding(building);
     };
 
+    // Sorting function
+    const sortData = (column) => {
+        let sortedData = [...cctvdata];
+        if (sortColumn === column) {
+            sortedData.reverse();
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            sortedData.sort((a, b) => {
+                if (a[column] < b[column]) return -1;
+                if (a[column] > b[column]) return 1;
+                return 0;
+            });
+            setSortDirection('asc');
+        }
+        setSortColumn(column);
+        setCctvdata(sortedData);
+    };
+
+    // Function to determine the sorting icon
+    const sortingIcon = (column) => {
+        if (sortColumn === column) {
+            return sortDirection === 'asc' ? <PiSortAscendingBold /> : <PiSortDescendingBold />;
+        }
+        return <FaSort />;
+    };
+
     return (
         <>
             <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
                 <Link className="btn btn-success btn-sm" to="/cctv/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+เพิ่มข้อมูล CCTV</Link>
 
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <InputGroup style={{ marginLeft: '3rem', marginTop: '30px', width: '40%' }}>
-                        <Form.Control
-                            placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
-                            aria-label="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
-                            aria-describedby="basic-addon2"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </InputGroup>
-                    <Dropdown style={{ marginLeft: '10px', marginTop: '30px', }}>
-                        <Dropdown.Toggle variant="secondary" id="dropdown-building">
-                            Select Building : {selectedBuilding || "All"}
-                        </Dropdown.Toggle>
+                <Container fluid className='mt-3 ms-4'>
+                    <Row>   
+                        <Col className='ms-3'>
+                            <InputGroup >
+                                <Form.Control
+                                    placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
+                                    aria-label="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
+                                    aria-describedby="basic-addon2"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Col>
+                        <Col className='me-5'>
+                            <Dropdown >
+                                <Dropdown.Toggle variant="secondary" id="dropdown-building">
+                                    Select Building : {selectedBuilding || "All"}
+                                </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            {placeName.map((item, index) => (
-                                <Dropdown.Item key={index}
-                                    onClick={() => handleBuildingSelect(item.place_name)}>
-                                    {item.place_name}
-                                </Dropdown.Item>
-                            ))
-                            }
-                            <Dropdown.Item onClick={() => handleBuildingSelect("")}>
-                                All
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
+                                <Dropdown.Menu>
+                                    {placeName.map((item, index) => (
+                                        <Dropdown.Item key={index}
+                                            onClick={() => handleBuildingSelect(item.place_name)}>
+                                            {item.place_name}
+                                        </Dropdown.Item>
+                                    ))
+                                    }
+                                    <Dropdown.Item onClick={() => handleBuildingSelect("")}>
+                                        All
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Col>
+                    </Row>
+                </Container>
 
                 {loading ? ( // Conditionally render Bootstrap spinner
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
@@ -219,8 +257,8 @@ export default function Customer() {
                             <Table responsive striped bordered hover>
                                 <thead>
                                     <tr role="row" className="bg-secondary text-white">
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '2%', textAlign: 'center' }}>IP Address</th>
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>CCTV Name</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '2%', textAlign: 'center' }} onClick={() => sortData('ipc_address')}>IP Address {sortingIcon('ipc_address')}</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }} onClick={() => sortData('ipc_name')}>CCTV Name {sortingIcon('ipc_name')}</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '2%', textAlign: 'center' }}>Status</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="2" style={{ width: '1%', textAlign: 'center' }}>Actions</th>
@@ -239,6 +277,7 @@ export default function Customer() {
                                 </tbody>
                             </Table>
                         </div>
+                        
                         <div className='container mt-3 border-bottom' style={{ marginLeft: '50px' }}>
                             <Pagination>
                                 <Pagination.First onClick={firstPage} />
@@ -249,7 +288,7 @@ export default function Customer() {
                                 <Pagination.Next disabled={currentPage === Math.ceil(cctvdata.length / numPerPage) - 1} onClick={() => setCurrentPage(currentPage + 1)} />
                                 <Pagination.Last onClick={lastPage} />
 
-                                <Dropdown className="float-end" style={{ marginLeft: '10px' }}>
+                                <Dropdown style={{ marginLeft: '10px' }}>
                                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                                         Rows per page: {numPerPage}
                                     </Dropdown.Toggle>
