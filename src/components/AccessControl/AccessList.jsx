@@ -11,6 +11,8 @@ import withReactContent from 'sweetalert2-react-content';
 import AccessItem from './AccessItem';
 import Spinner from 'react-bootstrap/Spinner';
 import { SERVER_URL } from '../../app.config';
+import { PiSortAscendingBold, PiSortDescendingBold } from "react-icons/pi";
+import { FaSort } from "react-icons/fa";
 
 export default function AccessControl() {
     const MySwal = withReactContent(Swal);
@@ -22,6 +24,9 @@ export default function AccessControl() {
     const [selectedBuilding, setSelectedBuilding] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState(null);
 
     // useEffect(() => {
     //     async function fetchData() {
@@ -179,6 +184,32 @@ export default function AccessControl() {
         setSelectedBuilding(building);
     };
 
+    // Sorting function
+    const sortData = (column) => {
+        let sortedData = [...accessdata];
+        if (sortColumn === column) {
+            sortedData.reverse();
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            sortedData.sort((a, b) => {
+                if (a[column] < b[column]) return -1;
+                if (a[column] > b[column]) return 1;
+                return 0;
+            });
+            setSortDirection('asc');
+        }
+        setSortColumn(column);
+        setAccessdata(sortedData);
+    };
+
+    // Function to determine the sorting icon
+    const sortingIcon = (column) => {
+        if (sortColumn === column) {
+            return sortDirection === 'asc' ? <PiSortAscendingBold /> : <PiSortDescendingBold />;
+        }
+        return <FaSort />;
+    };
+
     return (
         <>
             <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
@@ -226,8 +257,8 @@ export default function AccessControl() {
                             <Table responsive striped bordered hover>
                                 <thead>
                                     <tr role="row" className="bg-secondary text-white">
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>IP Address</th>
-                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>Device Name</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }} onClick={() => sortData('ac_ip')}>IP Address {sortingIcon('ac_ip')}</th>
+                                        <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }} onClick={() => sortData('ac_device_name')}>Device Name {sortingIcon('ac_device_name')}</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="1" style={{ width: '5%', textAlign: 'center' }}>อาคาร</th>
                                         <th tabIndex="0" rowSpan="1" colSpan="2" style={{ width: '1%', textAlign: 'center' }}>Actions</th>
                                     </tr>
