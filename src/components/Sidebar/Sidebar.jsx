@@ -71,7 +71,7 @@ export default function Sidebar() {
             showConfirmButton: false
         })
         setTimeout(function () {
-            navigate("/", { replace: false }); //* เข้าหน้า Home
+            navigate("/login", { replace: false }); //* เข้าหน้า Home
         }, 2000);
     }
 

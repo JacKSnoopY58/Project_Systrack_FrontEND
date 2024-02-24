@@ -117,7 +117,7 @@ export default function Login2() {
             showConfirmButton: false
           })
           setTimeout(function () {
-            navigate("/admin", { replace: false }); //* เข้าหน้า admin
+            navigate("/cctv/all", { replace: false }); //* เข้าหน้า admin
           }, 2000);
         }
 
@@ -181,7 +181,7 @@ export default function Login2() {
                         onChange={(e)=> setPassword(e.target.value)} 
                         required/>   
                       <Form.Control.Feedback type="invalid">
-                        Please enter your username.
+                        Please enter your password.
                       </Form.Control.Feedback>         
                     </Form.Group>
                   </div>

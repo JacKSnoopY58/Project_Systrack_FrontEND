@@ -160,7 +160,7 @@ export default function Login() {
                         showConfirmButton: false
                     })
                     setTimeout(function () {
-                        navigate("/admin" , {replace:false}); //* เข้าหน้า admin
+                        navigate("/cctv/all" , {replace:false}); //* เข้าหน้า admin
                     }, 2000);
                 }
     
