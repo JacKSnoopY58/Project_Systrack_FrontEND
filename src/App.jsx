@@ -16,6 +16,7 @@ import Barrier from "./components/AccessControl/Barrier";
 import CctvOnline from "./components/CCTV/CctvOnline";
 import CctvOffline from "./components/CCTV/CctvOffline";
 import CctvProgress from "./components/CCTV/CctvProgress";
+import Login2 from "./components/Login/Login2";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<Login/>} /> //*หน้าแรกของเว็บ
+          <Route path="/login" element={<Login2/>} /> 
 
           <Route path="/admin" 
             element={

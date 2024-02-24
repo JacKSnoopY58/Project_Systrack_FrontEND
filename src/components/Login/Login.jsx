@@ -2,7 +2,7 @@ import Logo from "../asset/image/logo.svg"
 import img1 from "../asset/image/dmitry-chernyshov-mP7aPSUm7aE-unsplash.jpg"
 import React , { useState } from "react";
 import {Form , Button } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import md5 from "md5";
 import Swal from 'sweetalert2';
 import "./Login.css";
@@ -229,6 +229,7 @@ export default function Login() {
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Button type="submit" className="sign-btn" style={{background: 'orange' , border: '0'}}>Sign in</Button>
+                                <Link to="/login">Login2</Link>
                             </div>
                         </Form>
                     </div>
