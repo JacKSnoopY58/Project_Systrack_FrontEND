@@ -206,7 +206,7 @@ export default function Customer() {
 
     return (
         <>
-            <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh' }}>
+            <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh', padding : '30px' }}>
                 <Link className="btn btn-success btn-sm" to="/cctv/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+เพิ่มข้อมูล CCTV</Link>
 
                 <Container fluid className='mt-3 ms-4'>
