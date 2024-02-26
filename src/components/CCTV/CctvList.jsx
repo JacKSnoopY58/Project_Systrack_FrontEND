@@ -11,11 +11,11 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Spinner from 'react-bootstrap/Spinner';
 import { SERVER_URL } from '../../app.config';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Stack } from 'react-bootstrap';
 import { PiSortAscendingBold, PiSortDescendingBold } from "react-icons/pi";
 import { FaSort } from "react-icons/fa";
 
-export default function Customer() {
+export default function Cctvlist() {
     const MySwal = withReactContent(Swal);
     const [search, setSearch] = useState("");
     const [cctvdata, setCctvdata] = useState([]);
@@ -28,6 +28,12 @@ export default function Customer() {
 
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState(null);
+
+    const [totalCount, setTotalCount] = useState(0);
+
+    const [selectedStatus, setSelectedStatus] = useState("");
+
+    const [ipcStatusName, setIpcStatusName] = useState([]);
 
     // useEffect(() => {
     //     async function fetchData() {
@@ -73,9 +79,11 @@ export default function Customer() {
 
                 const result = json.data.filter((item) =>
                     (item.ipc_address.includes(search) || item.ipc_name.includes(search)) &&
-                    (selectedBuilding === "" || item.place_name === selectedBuilding)
+                    (selectedBuilding === "" || item.place_name === selectedBuilding) &&
+                    (selectedStatus === "" || item.ipc_status_name === selectedStatus)
                 );
                 setCctvdata(result);
+                setTotalCount(result.length);
                 setCurrentPage(0);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -84,7 +92,7 @@ export default function Customer() {
             }
         }
         fetchData();
-    }, [search, cctvdata.length, selectedBuilding]);
+    }, [search, cctvdata.length, selectedBuilding, selectedStatus]);
 
     useEffect(() => {
         async function fetchData() {
@@ -92,6 +100,16 @@ export default function Customer() {
             const response = await API_GET("ac_place_name");
             // let json = await response.json();
             setPlaceName(response.data);
+        }
+        fetchData();
+
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await API_GET("ipc_status_name");
+            // let json = await response.json();
+            setIpcStatusName(response.data);
         }
         fetchData();
 
@@ -178,6 +196,10 @@ export default function Customer() {
         setSelectedBuilding(building);
     };
 
+    const handleStatusSelect = (status) => {
+        setSelectedStatus(status);
+    };
+
     // Sorting function
     const sortData = (column) => {
         let sortedData = [...cctvdata];
@@ -206,12 +228,11 @@ export default function Customer() {
 
     return (
         <>
-            <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh', padding : '30px' }}>
+            <div style={{ background: '#eaeaea', width: '100%', minHeight: '100vh', padding: '30px' }}>
                 <Link className="btn btn-success btn-sm" to="/cctv/create" style={{ marginLeft: '3rem', marginTop: '40px' }}>+เพิ่มข้อมูล CCTV</Link>
 
-                <Container fluid className='mt-3 ms-4'>
-                    <Row>   
-                        <Col className='ms-3'>
+                <Stack direction="horizontal" gap={3} style={{ marginLeft: '3rem', marginTop: '20px' }}>
+                    <div className='w-50'>
                             <InputGroup >
                                 <Form.Control
                                     placeholder="ค้นหา IP address หรือ ชื่อกล้อง CCTV"
@@ -221,8 +242,8 @@ export default function Customer() {
                                     onChange={(e) => setSearch(e.target.value)}
                                 />
                             </InputGroup>
-                        </Col>
-                        <Col className='me-5'>
+                    </div>
+                    <div>
                             <Dropdown >
                                 <Dropdown.Toggle variant="secondary" id="dropdown-building">
                                     Select Building : {selectedBuilding || "All"}
@@ -241,9 +262,28 @@ export default function Customer() {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                        </Col>
-                    </Row>
-                </Container>
+                    </div>
+                    <div>               
+                            <Dropdown>
+                                <Dropdown.Toggle variant="secondary" id="dropdown-status">
+                                    Select Status : {selectedStatus || "All"}
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    {ipcStatusName.map((item, index) => (
+                                        <Dropdown.Item key={index} onClick={() => handleStatusSelect(item.ipc_status_name)}>
+                                            {item.ipc_status_name}
+                                        </Dropdown.Item>
+                                    ))}
+                                    <Dropdown.Item onClick={() => handleStatusSelect("")}>
+                                        All
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                    </div>
+                </Stack>    
+
+
 
                 {loading ? ( // Conditionally render Bootstrap spinner
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
@@ -276,9 +316,11 @@ export default function Customer() {
                                     )}
                                 </tbody>
                             </Table>
+                            <h6 className='ms-1'>Total CCTV: {totalCount}</h6>
                         </div>
-                        
+
                         <div className='container mt-3 border-bottom' style={{ marginLeft: '50px' }}>
+
                             <Pagination>
                                 <Pagination.First onClick={firstPage} />
                                 <Pagination.Prev disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)} />
