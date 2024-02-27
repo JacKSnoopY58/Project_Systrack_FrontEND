@@ -5,11 +5,13 @@ import { Card, Row, Col, Button, Form, FormGroup } from 'react-bootstrap';
 import { CctvProvider } from '../../Provider/CctvProvider';
 import { ConfirmModal } from '../Modal';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function CctvDetail() {
     let params = useParams();
     const navigate = useNavigate();
-
+    const MySwal = withReactContent(Swal);
     const [ipcId, setIpcId] = useState(0);
     const [ipAddress, setIpAddress] = useState("");
     const [cctvName, setCctvName] = useState("");
@@ -94,6 +96,21 @@ export default function CctvDetail() {
         console.log(json);
         if (json.result) {
             // window.location = "/cctv/all";
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = MySwal.stopTimer;
+                  toast.onmouseleave = MySwal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Create CCTV Success!"
+              });
             navigate("/cctv/all");
         }
     }
@@ -102,6 +119,21 @@ export default function CctvDetail() {
         let json = await CctvProvider.updateCctv(ipcId, ipAddress, cctvName, ipcStatus, cctvPlaceId);
         if (json.result) {
             // window.location = "/cctv/all";
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = MySwal.stopTimer;
+                  toast.onmouseleave = MySwal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Update CCTV Success!"
+              });
             navigate("/cctv/all");
 
         }
