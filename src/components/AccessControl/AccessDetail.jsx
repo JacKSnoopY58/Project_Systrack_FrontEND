@@ -5,11 +5,13 @@ import { Card, Row, Col, Button, Form, FormGroup } from 'react-bootstrap';
 import { ConfirmModal } from '../Modal';
 import { AccessProvider } from '../../Provider/AccessProvider';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function AccessDetail() {
     let params = useParams();
     const navigate = useNavigate();
-
+    const MySwal = withReactContent(Swal);
     const [acId, setAcId] = useState(0);
     const [acIp, setAcIp] = useState("");
     const [acName, setAcName] = useState("");
@@ -77,6 +79,21 @@ export default function AccessDetail() {
         let json = await AccessProvider.createAccess(acIp, acName, acPlaceId);
         if (json.result){
             // window.location = "/AccessControl/all";
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = MySwal.stopTimer;
+                  toast.onmouseleave = MySwal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Create Success!"
+              });
             navigate("/AccessControl/all");
         }
     }
@@ -85,6 +102,21 @@ export default function AccessDetail() {
         let json = await AccessProvider.updateAccess(acId, acIp, acName, acPlaceId);
         if (json.result){
             // window.location = "/AccessControl/all";
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = MySwal.stopTimer;
+                  toast.onmouseleave = MySwal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Update CCTV Success!"
+              });
             navigate("/AccessControl/all");
 
         }
