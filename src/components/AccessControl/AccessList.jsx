@@ -23,6 +23,8 @@ export default function AccessControl() {
     const [acPlaceName, setAcPlaceName] = useState([]);
     const [selectedBuilding, setSelectedBuilding] = useState("");
 
+    const [totalCount, setTotalCount] = useState(0);
+
     const [loading, setLoading] = useState(false);
 
     const [sortColumn, setSortColumn] = useState(null);
@@ -63,7 +65,7 @@ export default function AccessControl() {
             setLoading(true);
             try {
                 const response = await fetch(
-                    SERVER_URL +  "ac_read_all",
+                    SERVER_URL + "ac_read_all",
                     {
                         method: "GET",
                         headers: {
@@ -82,6 +84,7 @@ export default function AccessControl() {
                 );
 
                 setAccessdata(result);
+                setTotalCount(result.length);
                 setCurrentPage(0);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -275,6 +278,7 @@ export default function AccessControl() {
                                     )}
                                 </tbody>
                             </Table>
+                            <h6 className='ms-1'>Total CCTV: {totalCount}</h6>
                         </div>
                         <div className='container mt-3 border-bottom' style={{ marginLeft: '50px' }}>
                             <Pagination>
