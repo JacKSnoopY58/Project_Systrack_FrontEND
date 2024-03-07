@@ -23,7 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Login/>} /> //*หน้าแรกของเว็บ
+          <Route path="/" element={<Login2/>} /> //*หน้าแรกของเว็บ
           <Route path="/login" element={<Login2/>} /> 
 
           <Route path="/admin" 
