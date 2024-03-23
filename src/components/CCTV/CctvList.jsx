@@ -176,7 +176,7 @@ export default function Cctvlist() {
 
     const handleNumPerPageSelect = (selectedNum) => {
         setNumPerPage(selectedNum);
-        setCurrentPage(0); // Reset to the first page when the number of rows per page changes
+        setCurrentPage(0); 
     };
 
     const firstPage = () => {
